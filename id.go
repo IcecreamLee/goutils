@@ -10,8 +10,14 @@ import (
 	"time"
 )
 
-func GetID() int64 {
-	return GetIDInstance().NextID()
+// ID 返回一个类snowflake算法生成的ID
+func ID() int64 {
+	return GenerateID()
+}
+
+// GenerateID 返回一个类snowflake算法生成的ID
+func GenerateID() int64 {
+	return IDGenSingleton().NextID()
 }
 
 // 定义 IDGenerator 实例变量
@@ -19,15 +25,12 @@ var id *IDGenerator
 var once sync.Once
 
 // 获取 IDGenerator 单例
-func GetIDInstance() *IDGenerator {
+func IDGenSingleton() *IDGenerator {
 	once.Do(func() {
 		id = &IDGenerator{}
 		id.init()
 	})
 	return id
-}
-
-type IDGenInterface interface {
 }
 
 // IDGenerator 结构体

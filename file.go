@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// 获取当前路径
+// GetCurrentPath 返回当前程序运行的路径
 func GetCurrentPath() string {
 	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {

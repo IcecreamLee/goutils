@@ -19,22 +19,12 @@ var idGenServ *IDGenServ
 var idGenServOnce sync.Once
 
 // 获取 IDGenServ 单例
-func GetIDServInstance() *IDGenServ {
+func IDServSingleton() *IDGenServ {
 	idGenServOnce.Do(func() {
 		idGenServ = &IDGenServ{}
 		idGenServ.init()
 	})
 	return idGenServ
-}
-
-// 初始化 IDGenServ 结构体变量值，创建 IDGenerator 实例时调用的方法，相当于构造函数
-func (id *IDGenServ) init() {
-	id.Epoch = 1500000000000
-	id.MachineId = 0
-	id.MachineBit = 4
-	id.Sequence = 0
-	id.SequenceBit = 10
-	id.lastTimestamp = 0
 }
 
 // 启用ID生成器Web服务

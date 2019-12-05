@@ -3,6 +3,7 @@ package goutils
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -44,4 +45,22 @@ func ToString(str interface{}) string {
 		return fmt.Sprintf("%v", reflectValue.Interface())
 	}
 	return ""
+}
+
+// ToInt 将传入的值转为int类型后返回，如转换失败则返回0
+func ToInt(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		i = 0
+	}
+	return i
+}
+
+// ToInt64 将传入的值转为int64类型后返回，如转换失败则返回0
+func ToInt64(s string) int64 {
+	i, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		i = 0
+	}
+	return i
 }
