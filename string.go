@@ -64,3 +64,8 @@ func ToInt64(s string) int64 {
 	}
 	return i
 }
+
+// substr 将字符串str截取一部分并返回
+func SubStr(str string, start int, length int) string {
+	return str[start : start+length]
+}

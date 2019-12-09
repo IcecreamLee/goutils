@@ -9,6 +9,22 @@ func Datetime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
+// dateFormat 将时间t格式化为字符串类型返回
+func DateFormat(t time.Time, layout ...string) string {
+	if len(layout) == 0 {
+		layout = append(layout, "2006-01-02")
+	}
+	return t.Format(layout[0])
+}
+
+// datetimeFormat 将时间t格式化为字符串类型返回
+func DatetimeFormat(t time.Time, layout ...string) string {
+	if len(layout) == 0 {
+		layout = append(layout, "2006-01-02 15:04:05")
+	}
+	return t.Format(layout[0])
+}
+
 // Timestamp 返回一个Unix时间戳
 func Timestamp() int64 {
 	return time.Now().Unix()
