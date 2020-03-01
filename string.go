@@ -1,6 +1,8 @@
 package goutils
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
 	"reflect"
 	"strconv"
@@ -68,4 +70,10 @@ func ToInt64(s string) int64 {
 // substr 将字符串str截取一部分并返回
 func SubStr(str string, start int, length int) string {
 	return str[start : start+length]
+}
+
+// md5Str 返回md5编码后的str
+func MD5Str(str []byte) string {
+	md5String := md5.Sum(str)
+	return hex.EncodeToString(md5String[:])
 }
