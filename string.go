@@ -69,7 +69,10 @@ func ToInt64(s string) int64 {
 
 // substr 将字符串str截取一部分并返回
 func SubStr(str string, start int, length int) string {
-	return str[start : start+length]
+	if len(str)-start > length {
+		return str[start : start+length]
+	}
+	return str[start:]
 }
 
 // md5Str 返回md5编码后的str
