@@ -57,11 +57,11 @@ func (ID *IDGenerator) NextID() int64 {
 	// 生成毫秒时间戳 & 序列号
 	timestamp := ID.timeGen()
 	if ID.lastTimestamp > timestamp { // 判断上次时间戳大于当前时间戳，防止时钟回拨
-		timestamp = ID.tilNextMillis(ID.lastTimestamp)
+		timestamp = ID.tillNextMillisecond(ID.lastTimestamp)
 	} else if ID.lastTimestamp == timestamp { // 同一时间戳内序列号自增
 		ID.Sequence = (ID.Sequence + 1) & ((1 << ID.SequenceBit) - 1)
 		if ID.Sequence == 0 { // 自增序列号超过最大值时，等待到下一毫秒
-			timestamp = ID.tilNextMillis(ID.lastTimestamp)
+			timestamp = ID.tillNextMillisecond(ID.lastTimestamp)
 		}
 	} else { // 上次时间戳小于当前时间戳则序列号回归为0
 		ID.Sequence = 0
@@ -88,16 +88,10 @@ func (ID *IDGenerator) timeGen() int64 {
 }
 
 // 获取下一毫秒的毫秒级时间戳（相对于lastTimestamp）
-func (ID *IDGenerator) tilNextMillis(lastTimestamp int64) int64 {
+func (ID *IDGenerator) tillNextMillisecond(lastTimestamp int64) int64 {
 	timestamp := ID.timeGen()
-	count := 0
-	for lastTimestamp > timestamp {
-		count++
-		// 只执行100次
-		if count > 100 {
-			return 0
-		}
-		time.Sleep(time.Duration(1) * time.Millisecond)
+	for lastTimestamp >= timestamp {
+		time.Sleep(1 * time.Microsecond)
 		timestamp = ID.timeGen()
 	}
 	return timestamp
